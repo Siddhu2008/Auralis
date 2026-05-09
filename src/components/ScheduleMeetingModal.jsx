@@ -49,7 +49,6 @@ export default function ScheduleMeetingModal({
   loading,
   addToast,
   meetingSettings,
-  refreshNotifications,
 }) {
   const today = new Date();
   const todayString = toDateInputValue(today);
@@ -172,9 +171,7 @@ export default function ScheduleMeetingModal({
 
     setShowConfirm(false);
     setShowSuccess(true);
-    refreshNotifications?.();
     addToast({
-
       type: 'success',
       title: 'Meeting scheduled',
       message: `${title.trim()} was added successfully.`,
@@ -191,31 +188,31 @@ export default function ScheduleMeetingModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-xl"
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-bg-primary/80 p-4 backdrop-blur-xl"
       >
         <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 12, scale: 0.98 }}
           transition={{ duration: 0.28, ease: 'easeOut' }}
-          className="premium-card w-full max-w-3xl rounded-3xl border border-white/12 p-5 sm:p-7 overflow-y-auto max-h-screen"
+          className="premium-card w-full max-w-3xl rounded-3xl border border-border-muted p-5 sm:p-7 overflow-y-auto max-h-screen"
           role="dialog"
           aria-modal="true"
           aria-labelledby="schedule-title"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-300/70">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-secondary/70">
                 Schedule Meeting
               </p>
-              <h2 id="schedule-title" className="mt-1 text-2xl font-bold text-white sm:text-3xl">
+              <h2 id="schedule-title" className="mt-1 text-2xl font-bold text-text-primary sm:text-3xl">
                 Plan a New Session
               </h2>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-white/10 p-2 text-slate-300 transition hover:bg-white/8 hover:text-white"
+              className="rounded-xl border border-border-muted/50 p-2 text-text-secondary transition hover:bg-white/5 hover:text-text-primary"
               aria-label="Close schedule modal"
             >
               <X className="h-5 w-5" />
@@ -225,7 +222,7 @@ export default function ScheduleMeetingModal({
           <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
             <div className="space-y-5">
               <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">
                   Meeting title
                 </span>
                 <input
@@ -233,12 +230,12 @@ export default function ScheduleMeetingModal({
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                   placeholder="Product review sync"
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-2xl border border-border-muted bg-bg-secondary/70 px-4 py-3 text-sm text-text-primary outline-none transition focus:border-accent-secondary/60 focus:ring-2 focus:ring-accent-secondary/30"
                 />
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">
                   Date (manual input)
                 </span>
                 <input
@@ -251,20 +248,20 @@ export default function ScheduleMeetingModal({
                     setMonth(startOfMonth(new Date(value)));
                     setDateError(validateDate(value));
                   }}
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-2xl border border-border-muted bg-bg-secondary/70 px-4 py-3 text-sm text-text-primary outline-none transition focus:border-accent-secondary/60 focus:ring-2 focus:ring-accent-secondary/30"
                 />
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">
                   Time slot
                 </span>
                 <div className="relative">
-                  <Clock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-300/80" />
+                  <Clock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent-secondary/80" />
                   <select
                     value={time}
                     onChange={(event) => setTime(event.target.value)}
-                    className="w-full appearance-none rounded-2xl border border-white/10 bg-slate-950/70 px-10 py-3 text-sm text-white outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/30"
+                    className="w-full appearance-none rounded-2xl border border-border-muted/60 bg-bg-secondary/70 px-10 py-3 text-sm text-text-primary outline-none transition focus:border-accent-secondary/60 focus:ring-2 focus:ring-accent-secondary/30"
                   >
                     {timeSlots.map((slot) => (
                       <option key={slot} value={slot}>
@@ -274,7 +271,7 @@ export default function ScheduleMeetingModal({
                   </select>
                 </div>
                 {date === todayString && (
-                  <p className="mt-2 text-xs text-slate-400">
+                  <p className="mt-2 text-xs text-text-secondary">
                     Past time slots for today are automatically removed.
                   </p>
                 )}
@@ -287,28 +284,28 @@ export default function ScheduleMeetingModal({
               )}
             </div>
 
-            <div className="premium-card rounded-2xl border border-white/10 p-4">
+            <div className="premium-card rounded-2xl border border-border-muted/50 p-4">
               <div className="mb-4 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={() => setMonth((value) => addMonths(value, -1))}
-                  className="rounded-lg border border-white/10 p-2 text-slate-300 transition hover:bg-white/10"
+                  className="rounded-lg border border-border-muted/50 p-2 text-text-secondary transition hover:bg-white/5"
                   aria-label="Previous month"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <p className="text-sm font-semibold text-slate-100">{format(month, 'MMMM yyyy')}</p>
+                <p className="text-sm font-semibold text-text-primary">{format(month, 'MMMM yyyy')}</p>
                 <button
                   type="button"
                   onClick={() => setMonth((value) => addMonths(value, 1))}
-                  className="rounded-lg border border-white/10 p-2 text-slate-300 transition hover:bg-white/10"
+                  className="rounded-lg border border-border-muted/50 p-2 text-text-secondary transition hover:bg-white/5"
                   aria-label="Next month"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400">
+              <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-text-secondary">
                 {WEEK_DAYS.map((label) => (
                   <span key={label} className="py-1">
                     {label}
@@ -334,12 +331,12 @@ export default function ScheduleMeetingModal({
                     }}
                     className={`h-9 rounded-lg text-sm transition duration-300 ease-in-out ${
                       item.isSelected
-                        ? 'bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-500 text-white shadow-lg shadow-cyan-600/20'
+                        ? 'bg-gradient-primary text-white shadow-lg shadow-accent-primary/20'
                         : item.isToday
-                          ? 'border border-cyan-300/60 bg-cyan-500/8 text-cyan-200'
+                          ? 'border border-accent-secondary/60 bg-accent-secondary/10 text-accent-secondary'
                           : item.isCurrentMonth
-                            ? 'text-slate-200 hover:bg-white/10'
-                            : 'text-slate-600'
+                            ? 'text-text-primary/90 hover:bg-white/5'
+                            : 'text-text-secondary/50'
                     } ${item.isPast ? 'cursor-not-allowed opacity-35 line-through' : ''}`}
                     aria-label={format(item.day, 'PPP')}
                   >
@@ -351,8 +348,8 @@ export default function ScheduleMeetingModal({
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-              <p className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/60 px-3 py-2 text-xs text-slate-300">
-              <Calendar className="h-4 w-4 text-cyan-300" />
+              <p className="inline-flex items-center gap-2 rounded-xl border border-border-muted/60 bg-bg-secondary/60 px-3 py-2 text-xs text-text-secondary">
+              <Calendar className="h-4 w-4 text-accent-secondary" />
               {title.trim()
                 ? `${title.trim()} · ${date} at ${time || '--:--'}`
                 : `Select meeting details to continue`}
@@ -380,12 +377,12 @@ export default function ScheduleMeetingModal({
                 initial={{ opacity: 0, y: 16, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                className="premium-card w-full max-w-md rounded-3xl border border-white/12 p-6"
+                className="premium-card w-full max-w-md rounded-3xl border border-border-muted p-6"
               >
                 <h3 className="text-xl font-bold text-white">Confirm Schedule</h3>
-                <p className="mt-2 text-sm text-slate-300">
-                  This will schedule <span className="font-semibold text-white">{title.trim()}</span> on{' '}
-                  <span className="font-semibold text-white">
+                <p className="mt-2 text-sm text-text-secondary">
+                  This will schedule <span className="font-semibold text-text-primary">{title.trim()}</span> on{' '}
+                  <span className="font-semibold text-text-primary">
                     {format(new Date(date), 'EEE, MMM d')} at {time}
                   </span>.
                 </p>
@@ -433,8 +430,8 @@ export default function ScheduleMeetingModal({
                 className="premium-card w-full max-w-xs rounded-3xl border border-emerald-400/30 p-6 text-center"
               >
                 <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-300" />
-                <p className="mt-3 text-lg font-semibold text-white">Scheduled Successfully</p>
-                <p className="mt-1 text-sm text-slate-300">Your meeting is now in upcoming sessions.</p>
+                <p className="mt-3 text-lg font-semibold text-text-primary">Scheduled Successfully</p>
+                <p className="mt-1 text-sm text-text-secondary">Your meeting is now in upcoming sessions.</p>
               </motion.div>
             </motion.div>
           )}
